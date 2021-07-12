@@ -6,7 +6,6 @@ import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
 import { fetchFollowers } from '../src/lib/GithubConsumer'
 
 function ProfileSidebar(propriedades) {
-  console.log(propriedades);
   return (
     <Box>
       <img src={`https://github.com/${propriedades.githubUser}.png`} style={{ borderRadius: '8px' }} />
@@ -35,7 +34,7 @@ export default function Home() {
               Bem vindo(a)
             </h1>
 
-            <OrkutNostalgicIconSet />
+            <OrkutNostalgicIconSet confiavel={3} legal={3} />
           </Box>
         </div>
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
@@ -47,7 +46,7 @@ export default function Home() {
             <ul>
               {pessoasFavoritas.map((itemAtual) => {
                 return (
-                  <li>
+                  <li key={itemAtual}>
                     <a href={`/users/${itemAtual}`} key={itemAtual}>
                       <img src={`https://github.com/${itemAtual}.png`} />
                       <span>{itemAtual}</span>
