@@ -1,11 +1,12 @@
+import { defaultConfig } from 'next/dist/next-server/server/config-shared';
 import styled from 'styled-components';
 import Box from '../Box';
 
-export const ProfileRelationsBoxWrapper = styled(Box)`
+const ProfileRelationsBoxWrapper = styled(Box)`
   ul {
     display: grid;
     grid-gap: 8px;
-    grid-template-columns: 1fr 1fr 1fr; 
+    grid-template-columns: 1fr 1fr 1fr;
     max-height: 220px;
     list-style: none;
   }
@@ -50,3 +51,30 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
     }
   }
 `;
+
+const ProfileRelations = ( { title, items } ) => {
+  const shuffled = items.sort(()=> Math.random() - 0.5);
+  return (
+    <>
+      <ProfileRelationsBoxWrapper>
+        <h2 className="smallTitle">
+          {title} ({items.length})
+        </h2>
+        <ul>
+          {shuffled.slice(0,6).map((itemAtual) => {
+            return (
+              <li key={itemAtual.title}>
+                <a href={itemAtual.href}>
+                  <img src={itemAtual.image} />
+                  <span>{itemAtual.title}</span>
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+      </ProfileRelationsBoxWrapper>
+    </>
+  )
+};
+
+export default ProfileRelations;
