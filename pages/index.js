@@ -3,7 +3,7 @@ import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
 import  ProfileRelations from '../src/components/ProfileRelations';
-import { fetchFollowers } from '../src/lib/GithubConsumer'
+import { fetchFollowers, fetchMeme } from '../src/lib/GithubConsumer'
 
 function ProfileSidebar(propriedades) {
   return (
@@ -30,7 +30,11 @@ export default function Home() {
   }, [ProfileRelations]);
   const usuarioAleatorio = 'vicaescorcio';
   const pessoasFavoritas = followers.map((user) => {
-    return { title: user.login, image: `https://github.com/${user.login}.png` }
+    return {
+      title: user.login,
+      image: `https://github.com/${user.login}.png`,
+      href: user.html_url
+    }
   });
   const [comunidades, setComunidades] = useState([{
     id: '12802378123789378912789789123896123',
@@ -56,17 +60,15 @@ export default function Home() {
           </Box>
           <Box>
             <h2 className="subTitle">O que você deseja fazer?</h2>
-            <form onSubmit={function handleCriaComunidade(e) {
+            <form onSubmit={async function handleCriaComunidade(e) {
                 e.preventDefault();
                 const dadosDoForm = new FormData(e.target);
-
-                console.log('Campo: ', dadosDoForm.get('title'));
-                console.log('Campo: ', dadosDoForm.get('image'));
-
+                const meme = await fetchMeme();
                 const comunidade = {
                   id: new Date().toISOString(),
                   title: dadosDoForm.get('title'),
-                  image: dadosDoForm.get('image'),
+                  image: meme.url,
+                  href: dadosDoForm.get('image')
                 }
                 const comunidadesAtualizadas = [...comunidades, comunidade];
                 setComunidades(comunidadesAtualizadas)

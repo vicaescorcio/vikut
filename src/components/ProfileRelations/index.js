@@ -63,7 +63,7 @@ const ProfileRelations = ( { title, items } ) => {
         <ul>
           {shuffled.slice(0,6).map((itemAtual) => {
             return (
-              <li key={itemAtual.title}>
+              <li key={`${itemAtual.id}-${itemAtual.title}`}>
                 <a href={itemAtual.href}>
                   <img src={itemAtual.image} />
                   <span>{itemAtual.title}</span>
